@@ -1,0 +1,46 @@
+import express from 'express';
+import colors from 'colors';
+import morgan from 'morgan';
+import config from './config/index.js';
+
+//Create server
+const server = express();
+
+//Parse JSON
+server.use(express.json());
+
+//Logger
+if (config.nodeEnv === 'development') {
+    server.use(morgan('dev'));
+}
+
+//DB Connection
+
+//Config Headers
+server.use((req, res, next) => {
+    //from where can I acces
+    res.header('Access-Control-Allow-Origin', '*');
+    //type of geaders
+    res.header('Access-Control-Allow-Headers', 'content-type, authorization');
+    //type of methods
+    res.header('Access-Control-Allow-Headers', 'GET, PUT, POST, DELETE, HEAD');
+    //next event
+    return next();
+});
+
+//Use routes
+
+//Uplead folder
+
+//Frontend production
+
+//Api stauts
+
+server.get(config.api.prefix, (req, res) => {
+    res.send('API is running...')
+});
+
+//Middlewares
+
+//Export server
+export default server;
