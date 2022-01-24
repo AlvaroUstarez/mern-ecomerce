@@ -2,6 +2,9 @@ import express from 'express';
 import colors from 'colors';
 import morgan from 'morgan';
 import config from './config/index.js';
+import routes from './routes/index.js';
+import { errorHandler, notFound} from './middlewares/errorMiddleware.js';
+
 
 //Create server
 const server = express();
@@ -29,6 +32,7 @@ server.use((req, res, next) => {
 });
 
 //Use routes
+server.use(config.api.prefix, routes);
 
 //Uplead folder
 
