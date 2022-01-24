@@ -2,9 +2,7 @@ import express from 'express';
 import colors from 'colors';
 import morgan from 'morgan';
 import config from './config/index.js';
-import routes from './routes/index.js';
-import { errorHandler, notFound} from './middlewares/errorMiddleware.js';
-
+import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 
 //Create server
 const server = express();
@@ -45,6 +43,9 @@ server.get(config.api.prefix, (req, res) => {
 });
 
 //Middlewares
+
+server.use(notFound)
+server.use(errorHandler)
 
 //Export server
 export default server;
