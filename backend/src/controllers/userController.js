@@ -1,12 +1,13 @@
-import asynHandler from 'express-async-handler';
+import asyncHandler from 'express-async-handler';
 import generateToken from '../common/generateToken.js';
 import User from '../models/userModels.js';
+
 
 //@desc Auth user  get token
 //@route POST /api/users/login
 //@access Public
 
-export const authUser = asynHandler(async(req, res) => {
+export const authUser = asyncHandler(async(req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user && (await user.mathPassword(password))) {
@@ -27,10 +28,10 @@ export const authUser = asynHandler(async(req, res) => {
 //@route POST /api/users
 //@access Public
 
-export const registerUser = asynHandler(async(req, res) => {
+export const registerUser = asyncHandler(async(req, res) => {
     const { name, email, password } = req.body;
-    const userEsists = await User.findOne({ email });
-    if (userEsists) {
+    const userExists = await User.findOne({ email });
+    if (userExists) {
         res.status(400);
         throw new Error('User already exists');
     }
