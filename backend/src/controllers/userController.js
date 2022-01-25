@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+import model from 'mongoose';
 import generateToken from '../common/generateToken.js';
 import User from '../models/userModels.js';
 
@@ -41,7 +42,7 @@ export const registerUser = asyncHandler(async(req, res) => {
         password,
     });
     if (user) {
-        res.status(201).json({
+        res.status(201).json({//el codigo de estatus 201 especifica que un nuevo usuario se a creado
             _id: user._id,
             name: user.name,
             email: user.email,
@@ -57,11 +58,16 @@ export const registerUser = asyncHandler(async(req, res) => {
 // @desc Get user profile
 // @route GET /api/users/profile
 // @access Private
-export const getUserProfile =asyncHandler(async (req, res)=>{
+export const getUserProfile = asyncHandler(async (req, res)=>{
     //Usar findById
     //Evitar un res.json({}) que contenga: _id, name, email, isAdmin
     //En caso de error devolver status 404 y arrojar el error: 'User not found'
-
+    const user=await User.findById(req.params.getUserById)
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found');
+    }
+    res.status(200).json(user);
 });
 
 // @decs Update user profile
@@ -80,7 +86,7 @@ export const getUserProfile =asyncHandler(async (req, res)=>{
  // @desc Get all users
  // @route PUT /api/users
  // @access Private/Admin
- export const getUsers =asyncHandler(async (req, res) =>{
+ export const getUsers = asyncHandler(async (req, res) =>{
      // Usar find
      // Enviar un res.json() con el resultado
  });
@@ -99,7 +105,7 @@ export const getUserProfile =asyncHandler(async (req, res)=>{
  // @desc Get user by ID
  // @route GET /API/users/:id
  // @access Private/Admin
- export const getUserById= asyncHandler(async (req, res) =>{
+ export const getUserById = asyncHandler(async (req, res) =>{
      // Usar findById agregandole .select() para evita el password
      // Si existe el usuario regresar res.json() con el resultado
      // Si o exixste el usuario retornar status 404
@@ -119,4 +125,4 @@ export const getUserProfile =asyncHandler(async (req, res)=>{
      //Retornar un res.json({}) con contega: _id, name, email, isAdmin
      //Si no se encontró el usuario entonces retornar status 404
      //Y arrojar el error: 'User not found'
- })
+ });
