@@ -40,6 +40,16 @@ export const deleteProduct = asyncHandler(async(req, res) => {
     //Y retornar res.json({}) message: 'Product removed'
     //Sino retornar status 404
     //y arrojar el error:'Product Not Found'
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (!product) {
+        res.status(404);
+        throw new Error('Product not found');
+    }
+    else{
+        product.remove();
+        res.status(200).json('Product removed');
+    }
 });
 
 //@desc Create a product
@@ -69,11 +79,28 @@ export const updateProduct = asyncHandler(async(req, res) => {
     //del req.body
     //Usar findById
     //Si existe el producto asignar los datos de la sigiente forma:
-    //product.name name ?? product.name;
+    //product.name =name ?? product.name;
     //Usar .save()
     //Retornar res.json() con el producto actualizado
     //Si no existe el producto retornar status 404
     //Y arrojar el error: 'Product Not Found'
+    const product = await Product.findById(req.params.id);
+    const {name, price, description, image, brand, category, countInStock} = req.body;
+    if (product){
+        product.name = name ?? product.name;
+        product.reviews.price =price ?? product.reviews.price;
+        product.description =description ?? product.description;
+        product.image = image ?? product.image;
+        product.brand = brand ?? product.brand;
+        product.category = category ?? product.category;
+        product.reviews.countInStock = countInStock ?? product.reviews.countInStock;
+//bloquear hasta que se modifique ver 
+        product.save();
+        res.status(200).json(product);
+    }else{
+        res.status(404);
+        throw new console.error('Product Not Found');
+    }
 });
 
 //@desc Create new review
