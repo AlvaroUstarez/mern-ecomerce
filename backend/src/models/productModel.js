@@ -32,8 +32,8 @@ const productSchema= mongoose.Schema(
         //Tomar como referencia el campo user que se
         //utilizó en reviewSchema
         type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'User',
+        required: true,
+        ref: 'User',
     },
     name:{
         //Texto, requerido
