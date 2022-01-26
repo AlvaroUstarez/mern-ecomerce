@@ -81,6 +81,22 @@ export const updateUserProfile = asyncHandler(async(req, res) => {
     // Guardar el usuario actualizado con .save()
     // Enviar un res.json({}) que contenga: _id, name, email, is Admin, token
     // En caso de error devolver status 404 y arrojar el error: 'User not found'
+    const user = await  User.findById(req.user._id);
+    if (user){
+        user.name=req.body.name || user.name;
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        if (req.body.password)
+        {
+            user.password= req.body.password|| user.password;
+        }
+        user.save();
+        res.status(200).json(user);
+    }else{
+        res.status(404);
+        throw new Error('User not found');
+    }
+   
 });
 
 // @desc Get all users
@@ -109,6 +125,18 @@ export const deleteUser = asyncHandler(async(req, res) => {
     // Retornar un res.json({}) con el message: 'User removed'
     // Si no se encontró el usuario retornar status 404
     // Y arrojar el error: 'User not found'
+
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found');
+    }
+    else{
+        user.remove();
+        res.status(200).json('User removed');
+    }
+    
 });
 
 //------------------------Alvaro------------------------//
