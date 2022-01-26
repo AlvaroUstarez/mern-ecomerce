@@ -50,7 +50,7 @@ export const getOrderById = asyncHandler (async (req, res)=> {
 // @desc Update order to  paid
 // @route PUT /api/orders/:id/pay
 // @access Private
-export const uppdateOrderToPaid = asyncHandler(async (req, res)=>{
+export const updateOrderToPaid = asyncHandler(async (req, res)=>{
     //Usar findById
     //Si existe la orden y el user que realiza la request es admin
     //o es el usuario que realizo la orden, 
