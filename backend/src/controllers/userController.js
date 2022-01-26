@@ -11,7 +11,9 @@ import User from '../models/userModels.js';
 export const authUser = asyncHandler(async(req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    console.log(user)
     if (user && (await user.matchPassword(password))) {
+        console.log('entro');
         res.json({
             _id: user._id,
             name: user.name,
@@ -61,12 +63,19 @@ export const getUserProfile = asyncHandler(async (req, res)=>{
     //Usar findById
     //Evitar un res.json({}) que contenga: _id, name, email, isAdmin
     //En caso de error devolver status 404 y arrojar el error: 'User not found'
-    const user=await User.findById(req.params.getUserById)
+    const id_user = req.user._id
+    const user = await User.findById({_id:id_user})
+    console.log(user);
     if (!user) {
         res.status(404);
         throw new Error('User not found');
     }
-    res.status(200).json(user);
+    res.status(200).json({
+        _id:user._id,
+        name :user.name,
+        email :user.email
+     } );
+
 });
 
 // @decs Update user profile
