@@ -91,13 +91,13 @@ export const getUsers = asyncHandler(async(req, res) => {
     // Enviar un res.json() con el resultado
 
     const users = await User.find({});
-
-    console.log(users);
-    res.status(200).json(users);
-
-
-
-
+    if (!users) {
+        res.status(401);
+        throw new Error('Bad Request');
+    } else {
+        console.log(users);
+        res.status(200).json(users);
+    }
 });
 
 // @desc Delete user
