@@ -120,6 +120,14 @@ export const getUserById = asyncHandler(async(req, res) => {
     // Si existe el usuario regresar res.json() con el resultado
     // Si o exixste el usuario retornar status 404
     // Y rrojar el error: 'User not found'
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found');
+    }
+    res.status(200).json(user);
+
 });
 
 // @decs Update user
