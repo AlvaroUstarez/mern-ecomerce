@@ -29,6 +29,13 @@ export const getProductById = asyncHandler(async(req, res) => {
     //Retornar el producto encontrado
     //Sino retornar status 404
     //Y arrojar el error: 'Product Not Found'
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+        res.status(404);
+        throw new Error('Product not found');
+    }
+    res.status(200).json(user);
+
 });
 
 //desc Delete product
