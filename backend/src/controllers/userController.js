@@ -117,7 +117,7 @@ export const deleteUser = asyncHandler(async(req, res) => {
 // @access Private/Admin
 export const getUserById = asyncHandler(async(req, res) => {
     // Usar findById agregandole .select() para evita el password
-    // Si existe el usuario regresar res.json() con el resultado
+    // Si existe el usuario regresar res.json() con el resultadogit
     // Si o exixste el usuario retornar status 404
     // Y rrojar el error: 'User not found'
 
@@ -143,4 +143,17 @@ export const updateUser = asyncHandler(async(req, res) => {
     //Retornar un res.json({}) con contega: _id, name, email, isAdmin
     //Si no se encontró el usuario entonces retornar status 404
     //Y arrojar el error: 'User not found'
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found');
+    } else {
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.isAdmin = req.body.isAdmin || user.isAdmin;
+        user.save();
+        res.status(200).json(user);
+    }
+
 })
