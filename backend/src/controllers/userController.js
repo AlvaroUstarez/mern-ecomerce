@@ -63,8 +63,8 @@ export const getUserProfile = asyncHandler(async (req, res)=>{
     //Usar findById
     //Evitar un res.json({}) que contenga: _id, name, email, isAdmin
     //En caso de error devolver status 404 y arrojar el error: 'User not found'
-    const id_user = req.user._id
-    const user = await User.findById({_id:id_user})
+    //const id_user = req.user._id
+    const user = await User.findById({_id:req.user._id})
     console.log(user);
     if (!user) {
         res.status(404);
@@ -152,5 +152,6 @@ export const updateUser = asyncHandler(async(req, res) => {
     //Retornar un res.json({}) con contega: _id, name, email, isAdmin
     //Si no se encontró el usuario entonces retornar status 404
     //Y arrojar el error: 'User not found'
+    
 })
 
