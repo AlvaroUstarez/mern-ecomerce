@@ -51,7 +51,11 @@ export const getOrderById = asyncHandler(async(req, res) => {
     //    throw new Error('Order not found');
     //}
     //res.status(200).json(orden);
-    const order = await Order.findById(req.params._id).populate('user: name email');
+    // const order = await Order.findById(req.params._id).populate('user: name email');
+    const order = await Order.findById(req.params._id).populate({
+        path:'user',
+        select:'name email',
+    })
     if (order && req.user.isAdmin || req.user._id.equals(order.id)) {
         res.status(200).json(order);
     } else {
