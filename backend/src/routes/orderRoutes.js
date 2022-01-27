@@ -2,7 +2,7 @@ import { Router } from "express";
 import { 
     addOrderItems,
     getOrderById,  
-    uppdateOrderToPaid, 
+    updateOrderToPaid, 
     updateOrderToDelivered, 
     getMyOrders, 
     getOrders,
@@ -14,7 +14,7 @@ const router = Router();
 
 router.post('/', protect, addOrderItems);
 router.get('/:id', protect, getOrderById);
-router.put('/:id/pay', protect, uppdateOrderToPaid);
+router.put('/:id/pay', protect, updateOrderToPaid);
 router.put('/:id/deliver', protect, admin, updateOrderToDelivered);
 router.get('/myorders', protect, getMyOrders);
 router.get('/', protect, admin, getOrders);
