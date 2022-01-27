@@ -4,7 +4,7 @@ import colors from 'colors';
 import users from "./src/data/users.js";
 import products from "./src/data/products.js";
 import User from './src/models/userModels.js';
-import Product from './src/models/orderModel.js';
+import Product from './src/models/productModel.js';
 import Order from "./src/models/orderModel.js";
 import connectBD from './src/config/db.js';
 
@@ -21,8 +21,9 @@ const importData = async () =>{
 
         const createUsers = await User.insertMany(users);
         const adminUser = createUsers[0]._id;
+        console.log(adminUser)
         const sampleProducts= products.map((product)=>{
-            return {...product, user: adminUser};
+            return { ...product, user: adminUser};
         });
 
         await Product.insertMany(sampleProducts);
@@ -55,6 +56,9 @@ const detroyData= async () => {
 
 if (process.argv[2] === '-d'){
     detroyData();
+    console.log("estoy aqui");
+    console.log("process" +process.argv[2]);
 } else {
     importData();
+    console.log("estoy aqui ahora");
 }

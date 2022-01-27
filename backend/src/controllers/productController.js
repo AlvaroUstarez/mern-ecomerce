@@ -74,6 +74,8 @@ export const createProduct = asyncHandler(async(req, res) => {
         countInStock: 0,
         numReviews: 0,
         description: 'Sample desciption',
+
+
     });
     const createdProduct = await product.save();
     res.status(201).json(createdProduct);
