@@ -91,6 +91,7 @@ export const getMyOrders = asyncHandler(async(req, res) => {
 // @route GET /api/orders
 // @access Private/Admin
 export const getOrders = asyncHandler(async(req, res) => {
-    // Usar find y popular con los datos el user: id y name
-    // Retornar un json() con las ordenes    
+    // Usar find y populate con los datos el user: id y name
+    // Retornar un json() con las ordenes   
+
 })
