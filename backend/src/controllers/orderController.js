@@ -44,6 +44,13 @@ export const getOrderById = asyncHandler(async(req, res) => {
     // res.json() con la orden encontrada
     // Sino retornar status 404
     // Y arrojar el error:'Order not found'
+    //const orden = await Order.findById(req.params.id);
+    //console.log(orden);
+    //if (!orden) {
+    //    res.status(404);
+    //    throw new Error('Order not found');
+    //}
+    //res.status(200).json(orden);
 
 });
 

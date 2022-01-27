@@ -19,7 +19,7 @@ router.post('/login', authUser);
 router.get('/profile', protect, getUserProfile);
 router.put('/profile', protect, updateUserProfile);
 router.delete('/:id', protect, admin, deleteUser);
-router.get('/:id', protect, admin, getUserById);
+router.get('/:id', protect, getUserById);
 router.put('/:id', protect, admin, updateUser);
 
 
