@@ -84,7 +84,7 @@ const orderSchema = mongoose.Schema({
         type: Number,
         default: 0.0,
     },
-    shippingPrice:{
+    shippingPrice:{//agregado recien
         type: Number,
         default: 0.0
     },
