@@ -51,6 +51,14 @@ export const getOrderById = asyncHandler(async(req, res) => {
     //    throw new Error('Order not found');
     //}
     //res.status(200).json(orden);
+    const order = await Order.findById(req.params._id);
+    if (order && req.user.isAdmin || req.user._id.equals(order.id)) {
+        res.status(200).json(order);
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    }
+    
 
 });
 
@@ -71,6 +79,19 @@ export const updateOrderToPaid = asyncHandler(async(req, res) => {
     //};
     //Realizar un .save() y retornar la orden actualizada
     //Sino retornar status 404 y arrojar el error: 'Order nor found'
+    const order = await Order.findById();
+    if (order && req.user.isAdmin || req.user._id.equals(order.id)) {
+        order.isPaid = true;
+        order.paidAt = new Date();;
+        order.paymentResult = {
+            id: req.body.id,
+            status: req.body.status,
+            update_time: req.body.update_time,
+            email_address: req.body.payer.email_address,
+        };
+        order.save();
+        res.status(200).json(order);
+    }
 });
 
 // @desc Update order to delivered
@@ -83,6 +104,16 @@ export const updateOrderToDelivered = asyncHandler(async(req, res) => {
     //Asignar a isDelivered true y a deliceredAt la fecha actual
     //Realizar un .save() y retornar la oren actualizada
     //Sino retornar status 404 y arrojar el error: 'Order not found'
+    const order = await Order.findById();
+    if (order && req.user.isAdmin || req.user._id.equals(order.id)){
+        order.isDelivered = true;
+        order.deliveredAt = new Date();;
+        order.save();
+        res.status(200).json(order);
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    }
 });
 
 // @desc Get logged in user orders
@@ -92,6 +123,13 @@ export const getMyOrders = asyncHandler(async(req, res) => {
     //Usar find y en el parametro enviar la propiedad user con
     //el id que viene del req.user
     //Retornar un json() con las ordenes
+    const orders = await Order.find(req.user._id);
+    if (orders) {
+        res.status(200).json(orders);
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    }
 });
 
 // @desc Get all orders
@@ -100,5 +138,13 @@ export const getMyOrders = asyncHandler(async(req, res) => {
 export const getOrders = asyncHandler(async(req, res) => {
     // Usar find y populate con los datos el user: id y name
     // Retornar un json() con las ordenes   
+    const orders = await Order.find({}).populate('user:id name');
+    if (!orders) {
+        res.status(401);
+        throw new Error('Bad Request');
+    } else {
+        console.log(orders);
+        res.status(200).json(orders);
+    }
 
 })
