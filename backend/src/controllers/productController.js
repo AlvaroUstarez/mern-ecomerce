@@ -151,5 +151,13 @@ export const getTopProducts = asyncHandler(async(req, res) => {
     //Usar find ({}) y sort para ordenar por los más rankeados
     //y un limit de 3 resultados solamente
     //Retornar un json con los productos encontrados
+    const products = await Product.find({});
+    const product = products.sort(((a, b) => b.rating - a.rating)).slice(0, 3);
+    if (product) {
+        res.status200.json(product)
+    } else {
+        res.status(404);
+        throw new Error('Product Not Foutd');
+    }
 
 });
