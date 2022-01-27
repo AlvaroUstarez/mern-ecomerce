@@ -41,9 +41,9 @@ const detroyData= async () => {
     // Si surge un error mostrar log del error
     // Y lanzar process.exit
     try {
-        await User.deleteMany();
-        await Product.deleteMany();
         await Order.deleteMany();
+        await Product.deleteMany();
+        await User.deleteMany();
 
         console.log("Data Destroyed!".red.inverse);
         process.exit();
