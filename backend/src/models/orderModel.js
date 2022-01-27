@@ -35,7 +35,7 @@ const orderSchema = mongoose.Schema({
             ref: 'Product',
         }
     }, ],
-    shippingAdress: {
+    shippingAddress: {
         // address: Texto, requerido
         // city: Texto, requerido
         // postalCode: Texto, requerido
