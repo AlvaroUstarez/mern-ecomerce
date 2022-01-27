@@ -138,7 +138,10 @@ export const getMyOrders = asyncHandler(async(req, res) => {
 export const getOrders = asyncHandler(async(req, res) => {
     // Usar find y populate con los datos el user: id y name
     // Retornar un json() con las ordenes   
-    const orders = await Order.find({}).populate('user:id name');
+    const orders = await Order.find({}).populate({
+        path:'user',
+        select:'id name',
+    });//'user:id name');//path:'user', select:'id name'
     if (!orders) {
         res.status(401);
         throw new Error('Bad Request');

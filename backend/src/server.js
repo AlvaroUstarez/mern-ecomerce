@@ -5,6 +5,7 @@ import config from './config/index.js';
 import routes from './routes/index.js';
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 import connectDB from './config/db.js';
+import path from 'path';
 
 
 
@@ -38,7 +39,8 @@ server.use((req, res, next) => {
 server.use(config.api.prefix, routes);
 
 //Uplead folder
-
+const __dirname = path.resolve();
+server.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 //Frontend production
 
 //Api stauts
