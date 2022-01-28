@@ -21,7 +21,7 @@ const importData = async () =>{
 
         const createUsers = await User.insertMany(users);
         const adminUser = createUsers[0]._id;
-        console.log(adminUser)
+       // console.log(adminUser)
         const sampleProducts= products.map((product)=>{
             return { ...product, user: adminUser};
         });
@@ -56,9 +56,9 @@ const detroyData= async () => {
 
 if (process.argv[2] === '-d'){
     detroyData();
-    console.log("estoy aqui");
-    console.log("process" +process.argv[2]);
+    //console.log("estoy aqui");
+    //console.log("process" +process.argv[2]);
 } else {
     importData();
-    console.log("estoy aqui ahora");
+    //console.log("estoy aqui ahora");
 }

@@ -19,15 +19,15 @@ const orderSchema = mongoose.Schema({
         },
         qty: {
             type: Number,
-            required: true
+            required: true,
         },
         image: {
             type: String,
-            required: true
+            required: true,
         },
         price: {
             type: Number,
-            required: true
+            required: true,
         },
         product: {
             type: mongoose.Schema.Types.ObjectId,
@@ -35,32 +35,32 @@ const orderSchema = mongoose.Schema({
             ref: 'Product',
         }
     }, ],
-    shippingAdress: {
+    shippingAddress: {
         // address: Texto, requerido
         // city: Texto, requerido
         // postalCode: Texto, requerido
         // country: Texto, requerido
         address: {
             type: String,
-            required: true
+            required: true,
         },
         city: {
             type: String,
-            required: true
+            required: true,
         },
         postalCode: {
             type: String,
-            required: true
+            required: true,
         },
         country: {
             type: String,
-            required: true
+            required: true,
         }
     },
     paymentMethod: {
         // Texto, requerido
         type: String,
-        required: true
+        required: true,
     },
     paymentResult: {
         // id:Texto
