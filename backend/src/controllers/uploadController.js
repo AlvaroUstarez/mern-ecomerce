@@ -4,11 +4,11 @@ import path from 'path';
 const storage = multer.diskStorage({
     destination(req, file, cb){
         //Se llama al cb sin errores e indicando la carpeta uploads/
-        cb(null, './uploads');
+        cb(null, 'uploads/');
     },
     filename(req, file, cb){
         cb(
-            null, file.originalname + '-' + Date.now() + path.extname(file.originalname)
+            null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)
             //Se genera el nombre del archivo usando el fieldname, la fecha actual
             // y la extension del archivo (path.extname)
         );
@@ -23,7 +23,7 @@ const checkFileType =(file, cb)=>{
     if (extname && mimeType){
         //Retornar el cb sin errores y con true
        return (null,true);
-
+ 
     }else {
         cb('Images only!');
     }
@@ -40,5 +40,6 @@ export const uploadConfig = multer({
 //@route POST /api/upload
 //@access Private/Admin
 export const upload =(req, res)=>{
+    console.log("algo>", req.file);
     res.send(`/${req.file.path.replace(/\\/g,'/')}`);
 };
