@@ -105,7 +105,8 @@ export const updateOrderToDelivered = asyncHandler(async(req, res) => {//#####FU
     //Realizar un .save() y retornar la oren actualizada
     //Sino retornar status 404 y arrojar el error: 'Order not found'
     const order = await Order.findById(req.params.id);
-    if (order && req.user.isAdmin || req.user._id.equals(order.id)){
+    if (order && req.user.isAdmin || req.user._id.equals(order.id)){ //es las rutas se obliga a que sea admin
+        //************************* */
         order.isDelivered = true;
         order.deliveredAt = new Date();;
         order.save();

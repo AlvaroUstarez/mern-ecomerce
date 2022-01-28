@@ -1,4 +1,4 @@
-import multer from 'multer';
+/*import multer from 'multer';
 import path from 'path';
 
 const storage = multer.diskStorage({
@@ -15,14 +15,14 @@ const storage = multer.diskStorage({
     },
 }); 
 const checkFileType =(file, cb)=>{
-    const filetypes =/jpeg|jpg|png/;
+    const filetypes =/jpeg|jpg|png|jfif/;
     //Reemplazar null por los archivos permitidos: jpg, jpge, png
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimeType = filetypes.test(file.mimeType);
 
     if (extname && mimeType){
         //Retornar el cb sin errores y con true
-       return (null,true);
+       return cb(null,true); 
  
     }else {
         cb('Images only!');
@@ -34,12 +34,50 @@ export const uploadConfig = multer({
     fileFilter: function (req, file, cb){
         checkFileType(file, cb);
     },
-});
+}).single('image');
 
 //@desc Upload a image
 //@route POST /api/upload
 //@access Private/Admin
 export const upload =(req, res)=>{
-    console.log("algo>", req.file);
+    
     res.send(`/${req.file.path.replace(/\\/g,'/')}`);
+};
+*/
+import multer from 'multer'; 
+import path from 'path'; 
+ 
+const storage = multer.diskStorage({ 
+    destination(req, file, cb) { 
+        cb(null, 'uploads/') 
+    }, 
+    filename(req, file, cb) { 
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); 
+    }, 
+}); 
+ 
+const checkFileType = (file, cb) => { 
+    const filetypes = /jpeg|png|jpeg|jfif/; 
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase()); 
+    const mimetype = filetypes.test(file.mimetype); 
+ 
+    if (extname && mimetype) { 
+        cb(null, true); 
+    } 
+    else { 
+        cb('Images only'); 
+    } 
+}; 
+ 
+export const uploadConfig = multer({ 
+    storage, 
+    fileFilter: function (req, file, cb) { 
+        checkFileType(file, cb); 
+    }, 
+}); 
+ 
+export const upload = (req, res) => { 
+    console.log("algo > ", req); 
+    res.send(`/${req.file.path.replace(/\\/g, '/')}`); 
+ 
 };
