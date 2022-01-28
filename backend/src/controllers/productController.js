@@ -53,8 +53,7 @@ export const deleteProduct = asyncHandler(async(req, res) => {
     if (!product) {
         res.status(404);
         throw new Error('Product not found');
-    }
-    else{
+    } else {
         product.remove();
         res.status(200).json('Product removed');
     }
@@ -95,19 +94,19 @@ export const updateProduct = asyncHandler(async(req, res) => {
     //Si no existe el producto retornar status 404
     //Y arrojar el error: 'Product Not Found'
     const product = await Product.findById(req.params.id);
-    const {name, price, description, image, brand, category, countInStock} = req.body;
-    if (product){
-        product.name = name ?? product.name;
-        product.reviews.price =price ?? product.reviews.price;
-        product.description =description ?? product.description;
-        product.image = image ?? product.image;
-        product.brand = brand ?? product.brand;
-        product.category = category ?? product.category;
-        product.reviews.countInStock = countInStock ?? product.reviews.countInStock;
-//bloquear hasta que se modifique ver 
+    const { name, price, description, image, brand, category, countInStock } = req.body;
+    if (product) {
+        product.name = name || product.name;
+        product.reviews.price = price || product.reviews.price;
+        product.description = description || product.description;
+        product.image = image || product.image;
+        product.brand = brand || product.brand;
+        product.category = category || product.category;
+        product.reviews.countInStock = countInStock || product.reviews.countInStock;
+        //bloquear hasta que se modifique ver 
         product.save();
         res.status(200).json(product);
-    }else{
+    } else {
         res.status(404);
         throw new console.error('Product Not Found');
     }
@@ -156,7 +155,7 @@ export const getTopProducts = asyncHandler(async(req, res) => {
     const products = await Product.find({});
     const product = products.sort(((a, b) => b.rating - a.rating)).slice(0, 3);
     if (product) {
-        res.status200.json(product)
+        res.status(200).json(product)
     } else {
         res.status(404);
         throw new Error('Product Not Foutd');
