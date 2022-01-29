@@ -9,7 +9,7 @@ const reviewSchema = mongoose.Schema(
             required:true,
             
         },
-        Comment: {
+        comment: {
             //Texto, requerido
             type:String,
             required:true,
