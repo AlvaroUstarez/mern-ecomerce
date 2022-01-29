@@ -39,6 +39,9 @@ server.use((req, res, next) => {
 server.use(config.api.prefix, routes);
 
 //Uplead folder
+/*
+const __dirname = path.resolve();
+server.use('/uploads', express.static(path.join(__dirname, '/uploads')));*/
 const __dirname = path.resolve();
 server.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 //Frontend production

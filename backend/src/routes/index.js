@@ -9,6 +9,6 @@ const router = Router();
 router.use('/users', userRouter);
 router.use('/products', productRouter);
 router.use('/orders', orderRouter);
-router.use('/upload',uploadRouter);
+router.use('/uploads',uploadRouter);
 //router.use('/config/paypal', (req, res)=> res.send(config.payPal));
 export default router;

@@ -1,83 +1,70 @@
-/*import multer from 'multer';
+
+import multer from 'multer';
 import path from 'path';
 
 const storage = multer.diskStorage({
-    destination(req, file, cb){
-        //Se llama al cb sin errores e indicando la carpeta uploads/
-        cb(null, 'uploads/');
+    destination(req, file, cb) {
+        cb(null, 'uploads/')
     },
-    filename(req, file, cb){
-        cb(
-            null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)
-            //Se genera el nombre del archivo usando el fieldname, la fecha actual
-            // y la extension del archivo (path.extname)
-        );
-    },
-}); 
-const checkFileType =(file, cb)=>{
-    const filetypes =/jpeg|jpg|png|jfif/;
-    //Reemplazar null por los archivos permitidos: jpg, jpge, png
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimeType = filetypes.test(file.mimeType);
+    filename (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + 
+        path.extname(file.originalname));
+        
+    }, 
+});
 
-    if (extname && mimeType){
-        //Retornar el cb sin errores y con true
-       return cb(null,true); 
- 
-    }else {
-        cb('Images only!');
+const checkFileType = (file, cb) => {
+    const filetypes = /jpg|png|jpeg|jfif/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase()); 
+    const mimetype = filetypes.test(file.mimetype);
+    console.log(extname+'path'+path.extname(file.originalname).toLowerCase()+'fin extname');
+    console.log(mimetype+'fin mimetype');
+    if (extname && mimetype) {
+        console.log(file);
+        console.log('listo');
+        cb(null, true);
+    } 
+    else {
+        console.log(file);
+        console.log('no entro');
+        cb('Images only');
     }
+    // if (!extname){
+    //     console.log('no entro2');
+    //     cb(new Error ('images only'));
+    //     console.log(cb);
+    // }
+       
+
+    
 };
 
 export const uploadConfig = multer({
     storage,
-    fileFilter: function (req, file, cb){
+    fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
+        if ( file.mimetype === 'image/jpeg' ||  file.mimetype ==='image/png' ) {
+            cb(null, true);
+        } else {
+            console.log('entro file');
+            cb('Images only');
+            
+        }
     },
-}).single('image');
 
-//@desc Upload a image
-//@route POST /api/upload
-//@access Private/Admin
-export const upload =(req, res)=>{
-    
-    res.send(`/${req.file.path.replace(/\\/g,'/')}`);
-};
-*/
-import multer from 'multer'; 
-import path from 'path'; 
- 
-const storage = multer.diskStorage({ 
-    destination(req, file, cb) { 
-        cb(null, 'uploads/') 
-    }, 
-    filename(req, file, cb) { 
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); 
-    }, 
-}); 
- 
-const checkFileType = (file, cb) => { 
-    const filetypes = /jpeg|png|jpeg|jfif/; 
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase()); 
-    const mimetype = filetypes.test(file.mimetype); 
- 
-    if (extname && mimetype) { 
-        cb(null, true); 
-    } 
-    else { 
-        cb('Images only'); 
-    } 
+}).single('file');
+
+export const upload = (req, res) => {
+    console.log("algo > ", req.file);
+    console.log('este es el cb'+ req.cb)
+    if(req.cb=='imagen only')
+        res.send('onlyimage');
+    if (!req.file)
+        return res.send('Please upload a file');
+    else {
+        res.send(`/${req.file.path.replace(/\\/g, '/')}`);
+        console.log('entor upload');
+    }
+        
+
 }; 
- 
-export const uploadConfig = multer({ 
-    storage, 
-    fileFilter: function (req, file, cb) { 
-        checkFileType(file, cb); 
-    }, 
-}); 
- 
-export const upload = (req, res) => { 
-    console.log("algo > ", req); 
-    res.send(`/${req.file.path.replace(/\\/g, '/')}`); 
- 
-};
