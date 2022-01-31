@@ -1,25 +1,32 @@
 import React from 'react';
+import { Nav, Navbar } from 'react-bootstrap';
 
 const Header = () => {
-  return <div>
-      <Nav justify variant="tabs" defaultActiveKey="/home">
-    <Nav.Item>
-      <Nav.Link href="/home">Active</Nav.Link>
-    </Nav.Item>
-    <Nav.Item>
-      <Nav.Link eventKey="link-1">Loooonger NavLink</Nav.Link>
-    </Nav.Item>
-    <Nav.Item>
-      <Nav.Link eventKey="link-2">Link</Nav.Link>
-    </Nav.Item>
-    <Nav.Item>
-      <Nav.Link eventKey="disabled" disabled>
-        Disabled
-      </Nav.Link>
-    </Nav.Item>
-  </Nav>
-  </div>;
-  
+  return (
+   <header>
+      <Navbar bg='dark' variant='dark' expend='lg' collapseOnSelect>
+    <Container>
+      <LinkContainer to='/'>
+        <Navbar.Brand>TiendaVirtual</Navbar.Brand>
+      </LinkContainer>
+      <Navbar.Toggle aria-controls='basic-navbar-nav' />
+      <Navbar.Collapse id='basic-navbar-nav'>
+        <Nav className='ms-auto'>
+          <LinkContainer to='/cart'>
+            <Nav.Link>
+              <i className='fas fa-shopping-cart'></i>Carrito
+            </Nav.Link>
+          </LinkContainer>
+          <LinkContainer to='/login'>
+            <Nav.Link>
+              <i className='fas fa-user'></i> Login
+            </Nav.Link>
+          </LinkContainer>
+        </Nav>
+      </Navbar.Collapse>
+    </Container> 
+  </Navbar>
+  </header>
+  ); 
 };
-
 export default Header;
