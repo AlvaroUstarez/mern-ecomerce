@@ -47,7 +47,9 @@ export const uploadConfig = multer({
             cb(null, true);
         } else {
             console.log('entro file');
-            cb('Images only');
+            
+            cb(new Error('Images only'), false);
+            return;
             
         }
     },

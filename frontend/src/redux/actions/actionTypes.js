@@ -1,0 +1,9 @@
+const actionTypes = {
+    /* PRODUCTS ACTIONS START */
+    PRODUCT_LIST_REQUEST : 'PRODUCT_LIST_REQUEST',
+    PRODUCT_LIST_SUCCESS : 'PRODUCT_LIST_SUCCESS',
+    PRODUCT_LIST_FAIL : 'PRODUCT_LIST_FAIL',
+    /* PRODUCT ACTIONS END */ 
+};
+
+export default actionsTypers;
