@@ -61,4 +61,4 @@ if (process.argv[2] === '-d'){
 } else {
     importData();
     //console.log("estoy aqui ahora");
-}
+} 
