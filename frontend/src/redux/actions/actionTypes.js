@@ -6,4 +6,4 @@ const actionTypes = {
     /* PRODUCT ACTIONS END */ 
 };
 
-export default actionsTypers;
+export default actionTypes;

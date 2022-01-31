@@ -7,15 +7,12 @@ const initialState = {};
 
 const middleware = [thunk];
 
-const store = crateStore(
+const store = createStore(
     reducer,
     initialState,
     composeWithDevTools(applyMiddleware(...middleware))
 );
 
 
-const store = () => {
-  return <div></div>;
-};
 
 export default store;

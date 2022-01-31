@@ -4,7 +4,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { ListProducts } from '../redux/actions/productActions';
+import { listProducts } from '../redux/actions/productActions';
 import Product from "../components/Product";
 
 const HomePage = () => {
@@ -13,11 +13,11 @@ const HomePage = () => {
     const { loading, error, products } = productList;
 
     const params = useParams();
-    const { keyword } = params;
+    const { keyword } = params; 
     const pageNumer = params.pageNumer || 1;
     
     useEffect(() => {
-        dispatch(ListProducts(keyword, pageNumer));
+        dispatch(listProducts(keyword, pageNumer));
     }, [dispatch, keyword, pageNumer]);
 
     return (
