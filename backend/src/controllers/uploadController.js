@@ -7,8 +7,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/')
     },
     filename (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + 
-        path.extname(file.originalname));
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
         
     }, 
 });
@@ -65,6 +64,4 @@ export const upload = (req, res) => {
         res.send(`/${req.file.path.replace(/\\/g, '/')}`);
         console.log('entor upload');
     }
-        
-
 }; 
