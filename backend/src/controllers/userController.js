@@ -87,7 +87,7 @@ export const updateUserProfile = asyncHandler(async(req, res) => {
     // En caso de error devolver status 404 y arrojar el error: 'User not found'
     const user = await  User.findById(req.user._id);
     if (user){
-        user.name=req.body.name || user.name;
+       // user.name=req.body.name || user.name;
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
         if (req.body.password)
