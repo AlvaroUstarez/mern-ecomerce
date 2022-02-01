@@ -1,5 +1,5 @@
 import actionTypes from "./actionTypes";
-import { getProducts} from '../../services/productServices';
+import { getProducts, getProduct} from '../../services/productServices';
 
 
 export const listProducts = (keyword= '', pageNumber = '')=>{
@@ -14,6 +14,26 @@ export const listProducts = (keyword= '', pageNumber = '')=>{
         }catch (error) {
             dispatch({
                 type:actionTypes.PRODUCT_LIST_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+            });
+        }
+    };
+};
+export const getProductDetail = (id)=>{
+    return async (dispatch) => {
+        try{
+            dispatch({type : actionTypes.PRODUCT_REQUEST});
+            const data = await getProduct(id);
+            dispatch({
+                type: actionTypes.PRODUCT_SUCCESS,
+                payload : data,
+            });
+        }catch (error) {
+            dispatch({
+                type:actionTypes.PRODUCT_FAIL,
                 payload:
                     error.response && error.response.data.message
                     ? error.response.data.message

@@ -7,7 +7,18 @@ export const getProducts = async (keyword, pageNumber) => {
             ` ${BASE_URL_BACK}/products?keywords=${keyword}&pageNumber=${pageNumber}`
         );
         return data;
-    }catch{
+    }catch(error){
+        throw error;
+    }
+};
+
+export const getProduct = async (id) => {
+    try {
+        const { data } = await axios.get(
+            ` ${BASE_URL_BACK}/products/${id}`
+        );
+        return data;
+    }catch(error){
         throw error;
     }
 };
