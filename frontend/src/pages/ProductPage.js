@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { Col, Row} from 'react-bootstrap';
+//import { Col, Row} from 'react-bootstrap';
 import { useDispatch, useSelector} from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { listProducts } from '../redux/actions/productActions';
-import Product from "../components/Product";
+//import Product from "../components/Product";
 import { getProductDetail } from "../redux/actions/productActions";
 export const ProductPage = () => {
     
@@ -24,22 +23,20 @@ export const ProductPage = () => {
     console.log(product);
 
   return (<>
-  
-  <h1>Últimos Productos</h1>
+
         {loading ? (
             <Loader/>
         ): error ? (
             <Message variant= 'danger'>{error}</Message>
         ): (
             <>
-            <Row>
-                {/* {products.map((product) => (
-                    
-                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                        { <Product product = {product}/> }
-                    </Col>
-                ))} */}
-            </Row>
+                <div className="card">
+                  <h1 className="card-header">{product.name}</h1>
+                  <div className="card-body">
+                    <h2>{product.price}</h2>
+                    <h6>{product.description}</h6>
+                  </div>
+                </div>
             </>
         )}
       

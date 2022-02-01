@@ -1,8 +1,6 @@
-import React, { useState } from "react";
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { getProduct } from "../redux/actions/productActions";
-import {Rating} from './Rating';
+import Rating from './Rating';
 
 
 const Product = ({ product }) => {
@@ -18,10 +16,10 @@ const Product = ({ product }) => {
                     </Card.Title>
                 </Link>
                 <Card.Text as='div'>
-                    {/* <Rating
+                    <Rating
                       value={product.rating}
                       text={`${product.numReviews} reviews`}
-                    /> */}
+                    />
                 </Card.Text>
                 <Card.Text as='h3'>$ {product.price}</Card.Text>
             </Card.Body>
