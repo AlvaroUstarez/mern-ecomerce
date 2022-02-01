@@ -4,6 +4,11 @@ const actionTypes = {
     PRODUCT_LIST_SUCCESS : 'PRODUCT_LIST_SUCCESS',
     PRODUCT_LIST_FAIL : 'PRODUCT_LIST_FAIL',
     /* PRODUCT ACTIONS END */ 
+
+    //LOGIN
+    AUTH_REQUEST : 'AUTH_REQUEST',
+    AUTH_RECEIVE : 'AUTH_RECEIVE',
+    AUTH_ERROR : 'AUTH_ERROR',
 };
 
 export default actionTypes;

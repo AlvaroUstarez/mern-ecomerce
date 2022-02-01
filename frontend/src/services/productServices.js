@@ -7,7 +7,7 @@ export const getProducts = async (keyword, pageNumber) => {
             ` ${BASE_URL_BACK}/products?keywords=${keyword}&pageNumber=${pageNumber}`
         );
         return data;
-    }catch{
+    }catch(error){
         throw error;
     }
 };

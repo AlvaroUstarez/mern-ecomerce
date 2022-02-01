@@ -1,6 +1,7 @@
 import React from 'react';
 import { Nav, Navbar, Container} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
+import LoginPage from '../pages/LoginPage.js';
 
 const Header = () => {
   return (
@@ -18,9 +19,9 @@ const Header = () => {
                   <i className='fas fa-shopping-cart'></i>Carrito
                 </Nav.Link>
                 </LinkContainer>
-                <LinkContainer to='/login'>
+                <LinkContainer to='/LoginPage'>
                   <Nav.Link>
-                    <i className='fas fa-user'></i> Login
+                    <i className='fas fa-user' ></i> Login
                   </Nav.Link>
                 </LinkContainer>
         </Nav>

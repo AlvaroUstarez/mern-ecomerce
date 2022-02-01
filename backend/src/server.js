@@ -7,13 +7,14 @@ import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 import connectDB from './config/db.js';
 import path from 'path';
 
-
+import cors from 'cors'//consultar
 
 //Create server
 const server = express();
 
 //Parse JSON
 server.use(express.json());
+server.use(cors({origin: 'http://localhost:3000'})) //linea para dar permisos de CORS
 
 //Logger
 if (config.nodeEnv === 'development') {
