@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch , useSelector } from 'react-redux';
-import { userlogin } from "../redux/actions/loginActions";
-import Loader from '../components/Loader';
-import Message from '../components/Message';
+import { userRegister } from "../redux/actions/loginActions";
 
-const LoginPage = () => {
+const RegisterPage = () => {
 
     const dispatch = useDispatch();
 
-    const usuario = useSelector((state) => state.usuario);
+    //const usuario = useSelector((state) => state.usuario);
     //const { loading, userLogger } = usuario;
-    
+    const [ name, setName ] = useState('');    
     const [ email, setEmail ] = useState(''); 
-    const [ password, setPassword ]= useState(''); 
+    const [ password, setPassword ]= useState('');
     
     const handleSubmit=(event)=>{
         event.preventDefault()
-       dispatch(userlogin(email, password))
+       dispatch(userRegister(name, email , password,))
     }
 
     return (
@@ -24,8 +22,18 @@ const LoginPage = () => {
         <div className='container'>
             <div className='row'>
                 <div className='col'>
-                    <h1>Iniciar Sesión</h1>
+                    <h1>Registro Usuario</h1>
                     <form onSubmit={handleSubmit}>
+                        <div className='mb-4'>
+                            <label htmlFor='name' className='form-label'>Name</label><br/>
+                            <input 
+                                type='text' 
+                                value={name}
+                                name='name'
+                                placeholder='name'
+                                onChange={({target}) => setName(target.value)} 
+                            ></input>
+                        </div>
                         <div className='mb-4'>
                             <label htmlFor='email' className='form-label'>Correo Electrónico</label><br/>
                             <input 
@@ -47,11 +55,10 @@ const LoginPage = () => {
                             ></input>
                         </div>
                         <div className='d-grid'>
-                            <button type='submit' className='btn btn-primary'>Iniciar Sesion</button>
+                            <button type='submit' className='btn btn-primary'>Crear Cuenta</button>
                         </div>
                         <div className='my-3'>
-                            <span>Eres un usuario Nuevo?<a href='/Register'>Registrate</a></span> <br/>
-                            <span><a href='#'>Recupear Password</a></span>
+                            <span>ya tienes cuenta?<a href='/Login'>Iniciar Sesion</a></span> <br/>
                         </div>
                     </form>   
                     </div>
@@ -63,4 +70,4 @@ const LoginPage = () => {
 };
 
 
-export default LoginPage;
+export default RegisterPage;

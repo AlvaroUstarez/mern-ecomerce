@@ -7,14 +7,14 @@ import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 import connectDB from './config/db.js';
 import path from 'path';
 
-import cors from 'cors'//consultar
+//import cors from 'cors'//consultar
 
 //Create server
 const server = express();
 
 //Parse JSON
 server.use(express.json());
-server.use(cors({origin: 'http://localhost:3000'})) //linea para dar permisos de CORS
+//server.use(cors({origin: 'http://localhost:3000'})) //linea para dar permisos de CORS
 
 //Logger
 if (config.nodeEnv === 'development') {
@@ -31,7 +31,7 @@ server.use((req, res, next) => {
     //type of geaders
     res.header('Access-Control-Allow-Headers', 'content-type, authorization');
     //type of methods
-    res.header('Access-Control-Allow-Headers', 'GET, PUT, POST, DELETE, HEAD');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD');
     //next event 
     return next();
 });

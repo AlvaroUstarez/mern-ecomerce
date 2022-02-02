@@ -7,7 +7,23 @@ export const login = async (email, password) => {
         password
     }
     try {
-        const { data } = await axios.post(` ${BASE_URL_BACK}/users/login`,body);
+       // const config = {headers:{'Content-Type': 'application/json',}};//config 
+        const { data } = await axios.post(` ${BASE_URL_BACK}/users/login`, body);
+        console.log(data)
+        return data;//info para sesión del usuario
+    }catch (error){
+        throw error;
+    }
+};
+
+export const register = async (name, email , password) => {
+    const body = {
+        name,
+        email,
+        password
+    }
+    try { 
+        const { data } = await axios.post(` ${BASE_URL_BACK}/users`, body);
         console.log(data)
         return data;//info para sesión del usuario
     }catch (error){

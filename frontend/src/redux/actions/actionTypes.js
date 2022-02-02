@@ -9,6 +9,12 @@ const actionTypes = {
     AUTH_REQUEST : 'AUTH_REQUEST',
     AUTH_RECEIVE : 'AUTH_RECEIVE',
     AUTH_ERROR : 'AUTH_ERROR',
+
+    //REGISTER
+    //LOGIN
+    REGISTER_REQUEST : 'REGISTER_REQUEST',
+    REGISTER_RECEIVE : 'REGISTER_RECEIVE',
+    REGISTER_ERROR : 'REGISTER_ERROR',
 };
 
 export default actionTypes;
