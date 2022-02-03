@@ -6,10 +6,10 @@ export const listProducts = (keyword= '', pageNumber = '')=>{
     return async (dispatch) => {
         try{
             dispatch({type : actionTypes.PRODUCT_LIST_REQUEST});
-            const data = await getProducts(keyword, pageNumber);
+            const data = await getProducts(keyword, pageNumber);//toma de servicios
             dispatch({
                 type: actionTypes.PRODUCT_LIST_SUCCESS,
-                payload : data,
+                payload : data,//se asigna lo q dev del servicio
             });
         }catch (error) {
             dispatch({

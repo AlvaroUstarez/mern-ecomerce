@@ -8,7 +8,7 @@ import { listProducts } from '../redux/actions/productActions';
 import Product from "../components/Product";
 
 const HomePage = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); //instancia
     const productList = useSelector((state) => state.productList);
     const { loading, error, products } = productList;
 

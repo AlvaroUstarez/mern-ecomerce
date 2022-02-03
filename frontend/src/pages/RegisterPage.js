@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { useDispatch , useSelector } from 'react-redux';
 import { userRegister } from "../redux/actions/loginActions";
+import { useNavigate } from "react-router-dom";
+import Message from '../components/Message';
+import toast from 'react-hot-toast';
 
 const RegisterPage = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    //const usuario = useSelector((state) => state.usuario);
-    //const { loading, userLogger } = usuario;
+    const usuario = useSelector((state) => state.userRegister);
+    const { error, userAuth } = usuario;
     const [ name, setName ] = useState('');    
     const [ email, setEmail ] = useState(''); 
     const [ password, setPassword ]= useState('');
@@ -15,7 +19,17 @@ const RegisterPage = () => {
     const handleSubmit=(event)=>{
         event.preventDefault()
        dispatch(userRegister(name, email , password,))
-    }
+    };
+
+    //https://cloudnweb.dev/2021/02/modern-react-redux-tutotials-redux-toolkit-login-user-registration
+    useEffect(() => {
+        if (userAuth) {
+           navigate("/Login");
+        }
+        if (error) {
+          toast.error(Message);  
+        }
+        }, [error,userAuth]);//no funca
 
     return (
         <>
@@ -66,7 +80,7 @@ const RegisterPage = () => {
             </div>
         </div>
         </>
-    )       
+    );      
 };
 
 

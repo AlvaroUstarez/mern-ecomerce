@@ -7,7 +7,7 @@ export const loginReducer =(state = { user: {} }, action ) =>{
         case actionTypes.AUTH_RECEIVE:
             return {
                 loading: false,
-                products:action.payload,
+                userAuth:action.payload,
             };
         case actionTypes.AUTH_ERROR:
             return {loading: false, error: action.payload};
@@ -23,7 +23,7 @@ export const registerReducer =(state = { user: {} }, action ) =>{
         case actionTypes.REGISTER_RECEIVE:
             return {
                 loading: false,
-                products:action.payload,
+                userAuth:action.payload,
             };
         case actionTypes.REGISTER_ERROR:
             return {loading: false, error: action.payload};

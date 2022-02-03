@@ -6,7 +6,9 @@ import App from './App';
 import store from './redux/store';
 
 import './bootstrap.min.css'; 
-import './index.css'; 
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.css'; 
+import 'bootstrap/js/dist/dropdown'; 
 
 ReactDOM.render(
   <Provider store={store}>

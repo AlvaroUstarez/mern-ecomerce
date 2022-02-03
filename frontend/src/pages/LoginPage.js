@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch , useSelector } from 'react-redux';
 import { userlogin } from "../redux/actions/loginActions";
-import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const usuario = useSelector((state) => state.usuario);
-    //const { loading, userLogger } = usuario;
+    const usuario = useSelector((state) => state.userLogger);
+    const { error, userAuth } = usuario;
     
     const [ email, setEmail ] = useState(''); 
     const [ password, setPassword ]= useState(''); 
@@ -18,6 +20,15 @@ const LoginPage = () => {
         event.preventDefault()
        dispatch(userlogin(email, password))
     }
+
+    useEffect(() => {
+        if (userAuth) {
+           navigate("/");
+        }
+        if (error) {
+          toast.error(Message);  
+        }
+        }, [error,userAuth]);//no funca
 
     return (
         <>
@@ -59,7 +70,7 @@ const LoginPage = () => {
             </div>
         </div>
         </>
-    )       
+    )     
 };
 
 

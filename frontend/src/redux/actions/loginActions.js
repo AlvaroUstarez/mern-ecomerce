@@ -9,6 +9,7 @@ export const userlogin = (email, password)=>{
                     type: actionTypes.AUTH_RECEIVE,
                     payload : data,
                 });
+                localStorage.setItem('userLogger',JSON.stringify(data))
             }catch (error) {
                 dispatch({
                     type:actionTypes.AUTH_ERROR,
