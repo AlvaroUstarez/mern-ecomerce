@@ -22,3 +22,45 @@ export const getProduct = async (id) => {
         throw error;
     }
 };
+
+export const createProduct = async (name, price, image, brand, countInStock, category, description) => {
+    const body = {
+        name,
+        price, 
+        image, 
+        brand, 
+        countInStock, 
+        category, 
+        description
+    }
+    try {
+        const { data } = await axios.post(
+            ` ${BASE_URL_BACK}/products`, body);
+        console.log(data);
+        return data;
+    }catch(error){
+        throw error;
+    }
+};
+
+/*export const updateProduct = async (body, id) => {
+    try {
+        const { data } = await axios.post(
+            ` ${BASE_URL_BACK}/products/${id}`, body);
+        console.log(data);
+        return data;
+    }catch(error){
+        throw error;
+    }
+};
+
+export const deleteProduct = async (id) => {
+    try {
+        const { data } = await axios.post(
+            ` ${BASE_URL_BACK}/products/${id}`);
+        console.log(data);
+        return data;
+    }catch(error){
+        throw error;
+    }
+};*/

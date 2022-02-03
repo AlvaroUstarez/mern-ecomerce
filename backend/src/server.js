@@ -30,7 +30,7 @@ server.use((req, res, next) => {
     //type of geaders
     res.header('Access-Control-Allow-Headers', 'content-type, authorization');
     //type of methods
-    res.header('Access-Control-Allow-Headers', 'GET, PUT, POST, DELETE, HEAD');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD');
     //next event 
     return next();
 });
