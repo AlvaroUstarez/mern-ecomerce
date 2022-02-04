@@ -1,5 +1,5 @@
 import actionTypes from "./actionTypes";
-import { login,register } from "../../services/userService";
+import { login,register,getUsers } from "../../services/userService";
 export const userlogin = (email, password)=>{
         return async function (dispatch) {
             try{
@@ -29,7 +29,7 @@ export const logout = () => {
       dispatch({ type: actionTypes.ORDER_LIST_MY_RESET });
       dispatch({ type: actionTypes.USER_LIST_RESET });
     };
-  };
+};
 
   export const userRegister = (name ,email , password)=>{
     return async function (dispatch) {
@@ -50,4 +50,31 @@ export const logout = () => {
             });
         }
     };
-}
+  }
+
+  export const listUsers = ()=>{
+    return async (dispatch, getState) => {
+        try{
+            dispatch({type : actionTypes.USER_LIST_REQUEST});
+            const {userLogger: { userAuth },} = getState();
+            const data = await getUsers(userAuth);
+
+            dispatch({
+                type: actionTypes.USER_LIST_SUCCESS,
+                payload : data,
+            });
+        }catch (error) {
+            const message =
+                error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+            if (message === 'Not authorized, token failed') {
+                dispatch(logout());
+            }
+            dispatch({
+                type: actionTypes.USER_LIST_FAIL,
+                payload: message,
+            });
+        }
+    };
+};

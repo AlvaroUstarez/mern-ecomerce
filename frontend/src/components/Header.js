@@ -47,7 +47,7 @@ const Header = () => {
                     Cerrar Sesión
                   </NavDropdown.Item>
                   
-                  {userAuth && userAuth.isAdmin && (<LinkContainer to='#'>
+                  {userAuth && userAuth.isAdmin && (<LinkContainer to='/ListUser'>
                     <NavDropdown.Item>Usuarios</NavDropdown.Item>
                   </LinkContainer>)
                   }

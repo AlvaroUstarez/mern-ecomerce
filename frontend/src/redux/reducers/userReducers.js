@@ -34,3 +34,19 @@ export const registerReducer =(state = { user: {} }, action ) =>{
             return state;
     }
 };
+
+export const userListReducer =(state = { usuarios: [] }, action ) =>{
+    switch (action.type) {
+        case actionTypes.USER_LIST_REQUEST:
+            return { loading: true};
+        case actionTypes.USER_LIST_SUCCESS:
+            return {
+                loading: false,usuarios:action.payload,};
+        case actionTypes.USER_LIST_FAIL:
+            return {loading: false, error: action.payload};
+        case actionTypes.USER_LIST_RESET:
+               return {usuarios: [] };
+        default:
+            return state;
+    }
+};

@@ -9,6 +9,7 @@ import ProfilePage from '../pages/ProfilePage'
 import ProductPage from '../pages/ProductPage';
 import ListProductPage from '../pages/ListProductPage';
 import EditProductPage from '../pages/EditProductPage';
+import ListUserPage from '../pages/ListUsersPage';
 
 const AppRouter = () => {
     
@@ -21,7 +22,8 @@ const AppRouter = () => {
                     <Route path='/' element={<HomePage/>}/>
                     <Route path='/Login' element={<LoginPage/>}/>
                     <Route path='/Register' element={<RegisterPage/>}/>
-                    <Route path='/profile' element={<ProfilePage/>}/>                         
+                    <Route path='/profile' element={<ProfilePage/>}/>  
+                    <Route path='/ListUser' element={<ListUserPage/>}/>                       
                     <Route path='/EditProductPage' element={<EditProductPage/>}/>
                     <Route path='/ListProductPage' element={<ListProductPage/>}/>
                     <Route path='/product/:id' element={<ProductPage/>}/>

@@ -36,4 +36,21 @@ export const register = async (name, email , password) => {
     }
 };
 
+export const getUsers = async (userAuth) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userAuth.token}`,
+          },
+      };
+    try {
+        const { data } = await axios.get(
+            `${BASE_URL_BACK}/users`, config);
+
+        return data;
+        
+    }catch(error){
+        throw error;
+    }
+};
+
 
