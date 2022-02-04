@@ -5,7 +5,7 @@ import { loginReducer, registerReducer,userListReducer} from './userReducers';
 
 const reducer = combineReducers({
     productList: productListReducer,
-    userLogger: loginReducer,
+    userLogger: loginReducer, 
     userRegister: registerReducer,
     userList:userListReducer,
     productDetail: productDetailReducer,

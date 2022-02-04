@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import {  Table} from 'react-bootstrap';
 import { useDispatch, useSelector} from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { listProducts } from '../redux/actions/productActions';
+import { listProducts, createProductAction, deleteProductAction } from '../redux/actions/productActions';
 import { useNavigate, useHistory } from "react-router-dom";
-import { createProductAction, deleteProductAction } from "../redux/actions/productActions";
+import actionTypes from '../redux/actions/actionTypes';
+import Paginate from '../components/Paginate';
+import Loader from '../components/Loader';
 
 const ListProductPage = () => {
     const dispatch = useDispatch();
