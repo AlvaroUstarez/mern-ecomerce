@@ -3,7 +3,6 @@ import { productDetailReducer, createProductReducer, productListReducer } from '
 import { loginReducer, registerReducer,} from './userReducers';
 
 
-
 const reducer = combineReducers({
     productList: productListReducer,
     userLogger: loginReducer, 
