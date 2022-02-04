@@ -64,7 +64,7 @@ export const createProductAction = (name, price, image, brand, countInStock, cat
         }
     };
 };
-/*
+
 export const updateProductAction = (body,id)=>{
     return async (dispatch) => {
         try{
@@ -93,7 +93,7 @@ export const deleteProductAction = (id)=>{
             const data = await deleteProduct(id);
             dispatch({
                 type: actionTypes.DELETE_PRODUCT_SUCCESS,
-                payload : data,
+             
             });
         }catch (error) {
             dispatch({
@@ -105,4 +105,4 @@ export const deleteProductAction = (id)=>{
             });
         }
     };
-};*/
+};

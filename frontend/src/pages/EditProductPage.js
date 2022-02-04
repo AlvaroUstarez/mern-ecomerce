@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { editProductAction} from '../redux/actions/productActions';
+import { updateProductAction , createProductAction} from '../redux/actions/productActions';
 
 
 const EditProductPage = () => {
-    /*const distpach = useDispatch();
+    
     //llama al reducer
-    const [product, saveProduct]=useState({
+    const [values, setValues]=useState({
         name:'',
         price:0,
         image:'',
@@ -16,18 +16,40 @@ const EditProductPage = () => {
         category:'',
         description:'',
     });
-    //producto a editar
-    const productEdit = useSelector(state => state.products.productEdit);
+
+    const distpach = useDispatch();
+
+    const productDetails = useSelector((state) => state.productDetails);
+    const { loading, error, product } = productDetails;
+    
+    const productEdit = useSelector((state) => state.products.productEdit);
+    const {
+        loading: loadingUpdate, 
+        error: errorUpdate, 
+        product: productUpdate
+    }=productEdit;
+
+    const imageProduct = useSelector((state)=>state.products.imageProduct);
+    const {
+        loading: loadingImage, 
+        error: errorImage,
+        success: successUpdate,
+        imageUpload
+    }=imageProduct;
+
+
+
+    
 
 
     // lleno el state automaticamente
     useEffect(()=>{
-        saveProduct(productEdit);
+        setValues(productEdit);
     },[productEdit]);
     //leo los datos del formulario
     const onChangeForm = e =>{
-        saveProduct({ 
-            ...product, 
+        setValues({ 
+            ...values, 
             [e.target.name]:e.target.value,
             [e.target.price]:e.target.value,
             [e.target.image]:e.target.value,
@@ -40,11 +62,11 @@ const EditProductPage = () => {
 
     //se aplica destructuring
     const {name, price, image, brand,
-         countInStock, category, description}=product;
+       countInStock, category, description}=product;
     
-    const submitEditProduct = e => {
+    const submitEditProduct = (e) => {
         e.preventDefault();
-        distpach(editProductAction(product));
+        distpach(updateProductAction(values));
         //direccionar al componente principal
         //history.push('/');
     };
@@ -139,7 +161,7 @@ const EditProductPage = () => {
        </div>
 
 
-  </>;*/
+  </>;
   return <></>
 };
 

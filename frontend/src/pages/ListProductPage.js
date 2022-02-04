@@ -6,12 +6,15 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { listProducts } from '../redux/actions/productActions';
 import { useNavigate, useHistory } from "react-router-dom";
+import { createProductAction, deleteProductAction } from "../redux/actions/productActions";
 
 const ListProductPage = () => {
     const dispatch = useDispatch();
-    let history = useHistory();
+
     const productList = useSelector((state) => state.productList);
     const { loading, error, products } = productList;
+
+    
 
     const params = useParams();
     const { keyword } = params; 
@@ -21,9 +24,37 @@ const ListProductPage = () => {
         dispatch(listProducts(keyword, pageNumer));
     }, [dispatch, keyword, pageNumer]);
 
-    const redirect = () => {
-        history.push('/CreateProductPage')
+    const createProductHandler= () => {
+        dispatch(createProductAction());
+      };
+    const deleteProductHandler = (productId) => {
+
+        // fijarse como hacer para sweetalert 
+        if (window.confirm('¿Está seguro de eliminar este producto?')) {
+            dispatch (deleteProductAction(productId));
+        }
     }
+/*
+    useEffect(() => {
+        if (!userInfo.isAdmin) {
+          navigate('/login');
+        }
+        if (successCreate) {
+          dispatch({ type: actionTypes.PRODUCT_CREATE_RESET });
+          navigate(`/admin/product/${createdProductAction._id}/edit`);
+        } else {
+          dispatch(listProducts('', pageNumber));
+        }
+      }, [
+        dispatch,
+        navigate,
+        userInfo,
+        successDelete,
+        successCreate,
+        createdProduct,
+        pageNumber,
+      ]);*/
+    
     return (
         <>
         <h1>Productos</h1>
@@ -33,7 +64,8 @@ const ListProductPage = () => {
             <Message variant= 'danger'>{error}</Message>
         ): (
             <>
-           <button type="submit" onClick={ redirect}>Nuevo Producto</button>
+           <button type="submit" onClick={createProductHandler}
+           >Nuevo Producto</button>
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>
@@ -56,10 +88,11 @@ const ListProductPage = () => {
                         <td>{product.brand}</td>
                         <td>
                                 <button
-                                type="submit"
+                                type="submit" onClick={() => deleteProductHandler(product._id)}
                             >Editar</button>
                             <button
-                                type="submit"
+                                type="submit"  onClick={() => deleteProductHandler(product._id)}
+                               
                             >Eliminar</button>
                         </td>
                         </tr>
@@ -71,7 +104,7 @@ const ListProductPage = () => {
             </>
         )}
         </>
-    )    
+    )     
 };
 
 export default ListProductPage;
