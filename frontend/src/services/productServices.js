@@ -22,3 +22,22 @@ export const getProduct = async (id) => {
         throw error;
     }
 };
+ 
+export const createProductReview = async (productId, review, userInfo) => {
+    const config = {
+        headers:{
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+    };
+    try{
+        const {data} = await axios.post(
+            `${BASE_URL_BACK}/products/${productId}/reviews`, 
+            review, 
+            config
+        );
+        return data;
+    }catch(error){
+        throw error;
+    }
+};
