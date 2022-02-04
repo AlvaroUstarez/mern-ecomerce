@@ -42,7 +42,7 @@ export const createProductReview = async (productId, review, userInfo) => {
     };
 
 }
-
+/*
 export const createProduct = async (name, price, image, brand, countInStock, category, description) => {
     const body = {
         name,
@@ -61,22 +61,45 @@ export const createProduct = async (name, price, image, brand, countInStock, cat
     }catch(error){
         throw error;
     }
-};
+};*/
 
-export const updateProduct = async (body, id) => {
+export const createProduct = async (userAuth) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth.token}`,
+      },
+    };
     try {
-        const { data } = await axios.post(
-            ` ${BASE_URL_BACK}/products/${id}`, body);
-        console.log(data);
-    }catch(error){
-        throw error;
+      const { data } = await axios.post(`${BASE_URL_BACK}/products`, {}, config);
+      return data;
+    } catch (error) {
+      throw error;
     }
-};
+  };
 
-export const deleteProduct = async (id, userInfo) => {
+export const updateProduct = async (product,userAuth) => {
     const config = {
         headers: {
-          Authorization: `Bearer ${userInfo.token}`,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userAuth.token}`,
+        },
+      };
+      try {
+        const { data } = await axios.put(
+          `${BASE_URL_BACK}/products/${product._id}`,
+          product,
+          config
+        );
+        return data;
+      } catch (error) {
+        throw error;
+      }
+};
+
+export const deleteProduct = async (id, userAuth) => {
+    const config = {
+        headers: {
+          Authorization: `Bearer ${userAuth.token}`,
         },
       };
       try {
@@ -90,11 +113,11 @@ export const deleteProduct = async (id, userInfo) => {
       }
     };
     
-    export const upload = async (formData, userInfo) => {
+    export const upload = async (formData, userAuth) => {
         const config = {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${userInfo.token}`,
+            Authorization: `Bearer ${userAuth.token}`,
           },
         };
         try {

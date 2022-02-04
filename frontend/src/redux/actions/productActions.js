@@ -75,46 +75,63 @@ export const createProductReview = (productId, review)=>{
 
 
 
-export const createProductAction = (name, price, image, brand, countInStock, category, description)=>{
-    return async (dispatch) => {
-        try{
-            dispatch({type : actionTypes.CREATE_PRODUCT_REQUEST});
-            const data = await createProduct(name, price, image, brand, countInStock, category, description);
-            dispatch({
-                type: actionTypes.CREATE_PRODUCT_SUCCESS,
-                payload : data,
-            });
-        }catch (error) {
-            dispatch({
-                type:actionTypes.CREATE_PRODUCT_FAIL,
-                payload:
-                    error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message,
-            });
-        }
-    };
+export const createProductAction = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.CREATE_PRODUCT_REQUEST,
+      });
+      const {
+        userLogger: { userAuth },
+      } = getState();
+      const data = await createProduct(userAuth);
+      dispatch({
+        type: actionTypes.CREATE_PRODUCT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
+      dispatch({
+        type: actionTypes.CREATE_PRODUCT_FAIL,
+        payload: message,
+      });
+    }
+  };
 };
-
-export const updateProductAction = (body,id)=>{
-    return async (dispatch) => {
-        try{
-            dispatch({type : actionTypes.UPDATE_PRODUCT_REQUEST});
-            const data = await updateProduct(body,id);
-            dispatch({
-                type: actionTypes.UPDATE_PRODUCT_SUCCESS,
-                payload : data,
-            });
-        }catch (error) {
-            dispatch({
-                type:actionTypes.UPDATE_PRODUCT_FAIL,
-                payload:
-                    error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message,
-            });
-        }
-    };
+export const updateProductAction = (product) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: actionTypes.UPDATE_PRODUCT_REQUEST,
+      });
+      const {
+        userLogger: { userAuth },
+      } = getState();
+      const data = await updateProduct(product, userAuth);
+      dispatch({
+        type: actionTypes.UPDATE_PRODUCT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
+      dispatch({
+        type: actionTypes.UPDATE_PRODUCT_FAIL,
+        payload: message,
+      });
+    }
+  };
 };
 
 export const deleteProductAction = (id)=>{
@@ -123,10 +140,10 @@ export const deleteProductAction = (id)=>{
           dispatch({
             type: actionTypes.DELETE_PRODUCT_REQUEST,
           });
-          const {
-            userLogin: { userInfo },
+          const { 
+            userLogger: { userAuth },
           } = getState();
-          await deleteProduct(id, userInfo);
+          await deleteProduct(id, userAuth);
           dispatch({
             type: actionTypes.DELETE_PRODUCT_SUCCESS,
           });
@@ -152,9 +169,9 @@ export const uploadImageAction = (image) => {
           type: actionTypes.PRODUCT_UPLOAD_IMAGE_REQUEST,
         });
         const {
-          userLogin: { userInfo },
+          userLogger: { userAuth },
         } = getState();
-        const data = await upload(image, userInfo);
+        const data = await upload(image, userAuth);
         dispatch({
           type: actionTypes.PRODUCT_UPLOAD_IMAGE_SUCCESS,
           payload: data,

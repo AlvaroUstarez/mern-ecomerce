@@ -116,11 +116,11 @@ const ListProductPage = () => {
                                 </Button>
                             </LinkContainer>
                             <Button
-                            variant='danger'
+                            variant='danger' 
                             onClick={() => deleteProductHandler(product._id)}>
                             <i className='fas fa-trash'></i>
                             </Button>
-                        </td>
+                        </td> 
                         </tr>
                     );
                     })}
