@@ -3,7 +3,14 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducers';
 
-const initialState = {};
+//const userStorage=localStorage.getItem('userLogger') ? JSON.parse(localStorage.getItem('userLogger')):null;
+const userInfoFromStorage = localStorage.getItem('userLogger')
+  ? JSON.parse(localStorage.getItem('userLogger'))
+  : null;
+const initialState = {
+    //userLogger:userStorage
+    userLogger: { userAuth: userInfoFromStorage },//userAuth es lo que se llama desde selector del login
+};
 
 const middleware = [thunk];
 
@@ -12,7 +19,5 @@ const store = createStore(
     initialState,
     composeWithDevTools(applyMiddleware(...middleware))
 );
-
-
 
 export default store;
