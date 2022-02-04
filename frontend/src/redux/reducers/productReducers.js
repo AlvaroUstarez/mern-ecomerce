@@ -33,53 +33,68 @@ export const productDetailReducer =(state = { product: {}}, action ) =>{
     }
 };
 
-export const createProductReducer =(state = { product: {}}, action ) =>{
+export const createProductReducer =(state = {}, action ) =>{
     switch (action.type) {
         case actionTypes.CREATE_PRODUCT_REQUEST:
-            return { loading: true, product:{}};
+            return { loading: true};
         case actionTypes.CREATE_PRODUCT_SUCCESS:
             return {
                 loading: false,
+                success:true,
                 product:action.payload,
             };
         case actionTypes.CREATE_PRODUCT_FAIL:
             return {loading: false, error: action.payload};
+        case actionTypes.CREATE_PRODUCT_RESET:
+            return {};
         default:
             return state;
     }
 };
 
-/*export const updateProductReducer =(state = { product: {}}, action ) =>{
+export const updateProductReducer =(state = { product: {} }, action ) =>{
     switch (action.type) {
         case actionTypes.UPDATE_PRODUCT_REQUEST:
-            return { loading: true, product:{}};
+            return { loading: true};
         case actionTypes.UPDATE_PRODUCT_SUCCESS:
             return {
-                loading: false,
-                product:action.payload,
+                loading: false, success: true, product: action.payload 
             };
         case actionTypes.UPDATE_PRODUCT_FAIL:
             return {loading: false, error: action.payload};
+            case actionTypes.UPDATE_PRODUCT_RESET:
+                return { product: {} };
         default:
             return state;
     }
 };
 
-export const deleteProductReducer =(state = { product: {}}, action ) =>{
+export const deleteProductReducer =(state = {}, action ) =>{
     switch (action.type) {
         case actionTypes.DELETE_PRODUCT_REQUEST:
-            return { loading: true, product:{}};
+            return { loading: true};
         case actionTypes.DELETE_PRODUCT_SUCCESS:
             return {
                 loading: false,
-                //PREGUNTAR COMO MANDAR MENSAJE 
-                //product:action.payload,
+                success:true,
             };
         case actionTypes.DELETE_PRODUCT_FAIL:
             return {loading: false, error: action.payload};
         default:
             return state;
     }
-};*/
+};
 
+export const productUploadImageReducer = (state = {}, action) => {
+    switch (action.type) {
+      case actionTypes.PRODUCT_UPLOAD_IMAGE_REQUEST:
+        return { loading: true };
+      case actionTypes.PRODUCT_UPLOAD_IMAGE_SUCCESS:
+        return { loading: false, success: true, productImage: action.payload };
+      case actionTypes.PRODUCT_UPLOAD_IMAGE_FAIL:
+        return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
+  };
 

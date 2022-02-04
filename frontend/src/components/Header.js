@@ -23,16 +23,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
-            <LinkContainer to='/ListProductPage'>
-                  <Nav.Link>
-                    <i className='fas fa-user' ></i> Productos
-                  </Nav.Link>
-                </LinkContainer>
-                <LinkContainer to='/EditProductPage'>
-                  <Nav.Link>
-                    <i className='fas fa-user' ></i> Editar Productos
-                  </Nav.Link>
-                </LinkContainer>
+            
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <i className='fas fa-shopping-cart'></i>Carrito
@@ -51,7 +42,7 @@ const Header = () => {
                     <NavDropdown.Item>Usuarios</NavDropdown.Item>
                   </LinkContainer>)
                   }
-                  {userAuth && userAuth.isAdmin && (<LinkContainer to='#'>
+                  {userAuth && userAuth.isAdmin && (<LinkContainer to='/admin/productlist'>
                     <NavDropdown.Item>Productos</NavDropdown.Item>
                   </LinkContainer>)
                   }

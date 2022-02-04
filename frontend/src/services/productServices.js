@@ -73,13 +73,38 @@ export const updateProduct = async (body, id) => {
     }
 };
 
-export const deleteProduct = async (id) => {
-    try {
+export const deleteProduct = async (id, userInfo) => {
+    const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      try {
         const { data } = await axios.delete(
-            `${BASE_URL_BACK}/products/${id}`
+          `${BASE_URL_BACK}/products/${id}`,
+          config
         );
-          return data;
-    }catch(error){
+        return data;
+      } catch (error) {
         throw error;
-    }
-};
+      }
+    };
+    
+    export const upload = async (formData, userInfo) => {
+        const config = {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+        try {
+          const { data } = await axios.post(
+            `${BASE_URL_BACK}/upload`,
+            formData,
+            config
+          );
+          return data;
+        } catch (error) {
+          throw error;
+        }
+      };

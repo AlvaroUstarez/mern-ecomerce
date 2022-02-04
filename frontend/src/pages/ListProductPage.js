@@ -1,29 +1,66 @@
 import React, { useEffect } from "react";
-import {  Table} from 'react-bootstrap';
 import { useDispatch, useSelector} from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams , useNavigate} from 'react-router-dom';
 import Message from '../components/Message';
-import { listProducts, createProductAction, deleteProductAction } from '../redux/actions/productActions';
-import { useNavigate, useHistory } from "react-router-dom";
+import { listProducts, createProductAction,
+     deleteProductAction } from '../redux/actions/productActions';
 import actionTypes from '../redux/actions/actionTypes';
 import Paginate from '../components/Paginate';
 import Loader from '../components/Loader';
+import {LinkContainer} from 'react-router-bootstrap';
+import { Table, Button} from 'react-bootstrap';
 
 const ListProductPage = () => {
-    const dispatch = useDispatch();
+
+    
+    const params = useParams();
+    const navigate = useNavigate();
+    const pageNumber = params.pageNumber || 1;
 
     const productList = useSelector((state) => state.productList);
-    const { loading, error, products } = productList;
+    const { loading, error, products, page, pages } = productList;
 
+    const deleteProduct = useSelector((state) => state.deleteProduct);
+    const {
+      loading: loadingDelete,
+      error: errorDelete,
+      success: successDelete,
+    } = deleteProduct;
+
+    const createProduct = useSelector((state) => state.createProduct);
+    const {
+      loading: loadingCreate,
+      error: errorCreate,
+      success: successCreate,
+      product: createdProduct,
+    } = createProduct;
+
+    //const userLogin = useSelector((state) => state.userLogin);
+    //const {userInfo} = userLogin;
+    const userLogger = useSelector((state) => state.userLogger);
+    const { userAuth } = userLogger;
     
-
-    const params = useParams();
-    const { keyword } = params; 
-    const pageNumer = params.pageNumer || 1;
+    const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(listProducts(keyword, pageNumer));
-    }, [dispatch, keyword, pageNumer]);
+        if (!userAuth.isAdmin) {
+          navigate('/login');
+        }
+        if (successCreate) {
+          dispatch({ type: actionTypes.CREATE_PRODUCT_RESET });
+          navigate(`/admin/product/${createdProduct._id}/edit`);
+        } else {
+          dispatch(listProducts('', pageNumber));
+        }
+      }, [
+        dispatch,
+        navigate,
+        userAuth,
+        successDelete,
+        successCreate,
+        createdProduct,
+        pageNumber,
+      ]);
 
     const createProductHandler= () => {
         dispatch(createProductAction());
@@ -31,42 +68,27 @@ const ListProductPage = () => {
     const deleteProductHandler = (productId) => {
 
         // fijarse como hacer para sweetalert 
-        if (window.confirm('¿Está seguro de eliminar este producto?')) {
+        if (window.confirm('¿Desea eliminar este producto?')) {
             dispatch (deleteProductAction(productId));
         }
     }
-/*
-    useEffect(() => {
-        if (!userInfo.isAdmin) {
-          navigate('/login');
-        }
-        if (successCreate) {
-          dispatch({ type: actionTypes.PRODUCT_CREATE_RESET });
-          navigate(`/admin/product/${createdProductAction._id}/edit`);
-        } else {
-          dispatch(listProducts('', pageNumber));
-        }
-      }, [
-        dispatch,
-        navigate,
-        userInfo,
-        successDelete,
-        successCreate,
-        createdProduct,
-        pageNumber,
-      ]);*/
-    
+
     return (
         <>
         <h1>Productos</h1>
+        <Button type="submit" onClick={createProductHandler}>
+        <i className='fas fa-plus'></i>Nuevo Producto</Button>
+        {loadingDelete && <Loader />}
+        {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+        {loadingCreate && <Loader />}
+        {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
         {loading ? (
-            <Loader/>
+        <Loader />
         ): error ? (
             <Message variant= 'danger'>{error}</Message>
         ): (
             <>
-           <button type="submit" onClick={createProductHandler}
-           >Nuevo Producto</button>
+           
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>
@@ -79,7 +101,7 @@ const ListProductPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {products.map((product, index) => {
+                    {products.map((product) => {
                     return (
                         <tr key={product._id}>
                         <td>{product._id}</td>
@@ -88,13 +110,16 @@ const ListProductPage = () => {
                         <td>{product.category}</td>
                         <td>{product.brand}</td>
                         <td>
-                                <button
-                                type="submit" onClick={() => deleteProductHandler(product._id)}
-                            >Editar</button>
-                            <button
-                                type="submit"  onClick={() => deleteProductHandler(product._id)}
-                               
-                            >Eliminar</button>
+                            <LinkContainer to={`/admin/product/${product._id}/edit`}>
+                                <Button>
+                                    <i className='fas fa-edit'></i>
+                                </Button>
+                            </LinkContainer>
+                            <Button
+                            variant='danger'
+                            onClick={() => deleteProductHandler(product._id)}>
+                            <i className='fas fa-trash'></i>
+                            </Button>
                         </td>
                         </tr>
                     );
@@ -102,6 +127,7 @@ const ListProductPage = () => {
                    
                 </tbody>
                 </Table>
+                <Paginate page={page} pages={pages} isAdmin={true} />
             </>
         )}
         </>

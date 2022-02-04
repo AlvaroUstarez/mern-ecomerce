@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { productDetailReducer, createProductReducer, productListReducer } from './productReducers';
+import { productDetailReducer, createProductReducer,
+     productListReducer, deleteProductReducer, updateProductReducer, productUploadImageReducer} from './productReducers';
 import { loginReducer, registerReducer,} from './userReducers';
 
 
@@ -9,8 +10,9 @@ const reducer = combineReducers({
     userRegister: registerReducer,
     productDetail: productDetailReducer,
     createProduct: createProductReducer,
-    //updateProduct: updateProductReducer,
-    //  deleteProduct: deleteProductReducer
+    updateProduct: updateProductReducer,
+   deleteProduct: deleteProductReducer,
+   productUploadImage:productUploadImageReducer, 
 });
 
 export default reducer;

@@ -1,8 +1,8 @@
 import actionTypes from "./actionTypes";
 // import { logout } from './userActions';
 import { getProducts, getProduct, createProduct,
-    updateProduct, deleteProduct} from '../../services/productServices';
-
+    updateProduct, deleteProduct, upload} from '../../services/productServices';
+import { logout } from './loginActions';
 
 
 export const listProducts = (keyword= '', pageNumber = '')=>{
@@ -118,23 +118,56 @@ export const updateProductAction = (body,id)=>{
 };
 
 export const deleteProductAction = (id)=>{
-    return async (dispatch) => {
-        try{
-            dispatch({type : actionTypes.DELETE_PRODUCT_REQUEST});
-            const data = await deleteProduct(id);
-            dispatch({
-                type: actionTypes.DELETE_PRODUCT_SUCCESS,
-             
-            });
-        }catch (error) {
-            dispatch({
-                type:actionTypes.DELETE_PRODUCT_FAIL,
-                payload:
-                    error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message,
-
-            });
+    return async (dispatch, getState) => {
+        try {
+          dispatch({
+            type: actionTypes.DELETE_PRODUCT_REQUEST,
+          });
+          const {
+            userLogin: { userInfo },
+          } = getState();
+          await deleteProduct(id, userInfo);
+          dispatch({
+            type: actionTypes.DELETE_PRODUCT_SUCCESS,
+          });
+        } catch (error) {
+          const message =
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message;
+          if (message === 'Not authorized, token failed') {
+            dispatch(logout());
+          }
+          dispatch({
+            type: actionTypes.DELETE_PRODUCT_FAIL,
+            payload: message,
+          });
         }
-    };
+      };
 };
+export const uploadImageAction = (image) => {
+    return async (dispatch, getState) => {
+      try {
+        dispatch({
+          type: actionTypes.PRODUCT_UPLOAD_IMAGE_REQUEST,
+        });
+        const {
+          userLogin: { userInfo },
+        } = getState();
+        const data = await upload(image, userInfo);
+        dispatch({
+          type: actionTypes.PRODUCT_UPLOAD_IMAGE_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: actionTypes.PRODUCT_UPLOAD_IMAGE_FAIL,
+          payload:
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+        });
+      }
+    };
+  };
+  
