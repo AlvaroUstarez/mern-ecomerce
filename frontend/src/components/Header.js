@@ -1,6 +1,8 @@
 import React from 'react';
 import { Nav, Navbar, Container} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
+import {ListProductPage} from '../pages/ListProductPage';
+import {EditProductPage} from '../pages/ListProductPage';
 
 const Header = () => {
   
@@ -14,6 +16,16 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
+            <LinkContainer to='/ListProductPage'>
+                  <Nav.Link>
+                    <i className='fas fa-user' ></i> Productos
+                  </Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/EditProductPage'>
+                  <Nav.Link>
+                    <i className='fas fa-user' ></i> Editar Productos
+                  </Nav.Link>
+                </LinkContainer>
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <i className='fas fa-shopping-cart'></i>Carrito
