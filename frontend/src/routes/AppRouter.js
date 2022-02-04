@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import HomePage from '../pages/HomePage';
 import ProductPage from '../pages/ProductPage';
 import ListProductPage from '../pages/ListProductPage';
-import CreateProductPage from '../pages/CreateProductPage';
 import EditProductPage from '../pages/EditProductPage';
 
 const AppRouter = () => {
@@ -18,7 +17,6 @@ const AppRouter = () => {
                     <Routes>
                          <Route path='/' element={<HomePage/>}/>
                          
-                        <Route path='/CreateProductPage' element={<CreateProductPage/>}/>
                         <Route path='/EditProductPage' element={<EditProductPage/>}/>
                         <Route path='/ListProductPage' element={<ListProductPage/>}/>
                         <Route path='/product/:id' element={<ProductPage/>}/>
