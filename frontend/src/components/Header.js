@@ -1,9 +1,9 @@
 import React from 'react';
 import { Nav, Navbar, Container, NavDropdown,} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
+//import {ListProductPage, EditProductPage} from '../pages/ListProductPage';
 import { useDispatch , useSelector } from 'react-redux';
 import { logout } from '../redux/actions/loginActions';
-
 
 const Header = () => {
   const dispatch = useDispatch(); 
@@ -13,7 +13,6 @@ const Header = () => {
   const cerrarSesion = () => {
     dispatch(logout());
   };
-
   return (
    <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
@@ -24,6 +23,16 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
+            <LinkContainer to='/ListProductPage'>
+                  <Nav.Link>
+                    <i className='fas fa-user' ></i> Productos
+                  </Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/EditProductPage'>
+                  <Nav.Link>
+                    <i className='fas fa-user' ></i> Editar Productos
+                  </Nav.Link>
+                </LinkContainer>
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <i className='fas fa-shopping-cart'></i>Carrito
